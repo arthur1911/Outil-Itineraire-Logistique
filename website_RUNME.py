@@ -6,6 +6,7 @@ from streamlit_folium import st_folium
 import matplotlib.pyplot as plt
 import plotly.express as px
 import json
+import os
 from streamlit import markdown
 import locale
 from datetime import datetime
