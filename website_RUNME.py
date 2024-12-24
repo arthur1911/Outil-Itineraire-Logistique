@@ -15,8 +15,15 @@ locale.setlocale(locale.LC_ALL, 'C.UTF-8')
 # Configuration de Streamlit
 st.set_page_config(page_title="Itinéraire Logistique", layout="centered")
 
-# Charger les informations d'identification Google API
-creds = Credentials.from_service_account_file("credentials.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
+# Lire les credentials depuis les secrets
+credentials_json = st.secrets["google_credentials"]
+
+# Écrire dans un fichier temporaire
+with open("credentials_temp.json", "w") as f:
+    json.dump(credentials_json, f)
+
+# Charger les informations d'identification
+creds = Credentials.from_service_account_file("credentials_temp.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
 
 # Connectez-vous à l'API Google Sheets
 service = build("sheets", "v4", credentials=creds)
