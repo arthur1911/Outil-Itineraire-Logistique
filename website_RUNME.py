@@ -38,7 +38,7 @@ os.remove(temp_credentials_path)
 service = build("sheets", "v4", credentials=creds)
 
 # ID et plage de votre Google Sheet
-spreadsheet_id = st.secrets["SPREADSHEET_API_KEY"]
+spreadsheet_id = st.secrets["SPREADSHEET_ID"]
 range_ = "'Infos'!A:D"  # Adaptez en fonction de votre structure
 
 # Fonction pour ajouter des données à Google Sheets
