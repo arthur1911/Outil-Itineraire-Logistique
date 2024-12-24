@@ -19,12 +19,19 @@ st.set_page_config(page_title="Itinéraire Logistique", layout="centered")
 # Lire les credentials depuis les secrets
 credentials_json = st.secrets["google_credentials"]
 
+# Convertir AttrDict en dict avant de l'écrire
+credentials_dict = dict(credentials_json)
+
 # Écrire dans un fichier temporaire
-with open("credentials_temp.json", "w") as f:
-    json.dump(credentials_json, f)
+temp_credentials_path = "credentials_temp.json"
+with open(temp_credentials_path, "w") as f:
+    json.dump(credentials_dict, f)
 
 # Charger les informations d'identification
-creds = Credentials.from_service_account_file("credentials_temp.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
+creds = Credentials.from_service_account_file(temp_credentials_path, scopes=["https://www.googleapis.com/auth/spreadsheets"])
+
+# Supprimer le fichier temporaire après usage
+os.remove(temp_credentials_path)
 
 # Connectez-vous à l'API Google Sheets
 service = build("sheets", "v4", credentials=creds)
