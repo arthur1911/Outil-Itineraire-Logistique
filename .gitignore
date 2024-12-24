@@ -1,0 +1,33 @@
+# Exclure les fichiers Python compilés
+*.py[cod]
+__pycache__/
+*.so
+
+# Exclure les environnements virtuels
+venv/
+env/
+.venv/
+
+# Exclure les journaux et bases de données temporaires
+*.log
+*.sqlite3
+*.pkl
+
+# Exclure le fichier de credentials Google API
+credentials.json
+
+# Exclure les fichiers secrets Streamlit
+.streamlit/
+.streamlit/secrets.toml
+
+# Exclure les fichiers générés par l'OS (Windows, macOS, Linux)
+.DS_Store
+Thumbs.db
+
+# Exclure les fichiers spécifiques à l'éditeur/IDE
+.idea/
+.vscode/
+*.swp
+
+# Exclure les fichiers générés par Git
+*.orig
