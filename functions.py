@@ -112,15 +112,34 @@ def are_stations_in_same_sheet(station1, station2, sheets):
     return False
 
 # Function to get driving distance
-def get_driving_distance(start, end):
+def get_driving_distance_OLD(start, end):
     directions = gmaps.directions(start, end, mode="driving")
     if directions:
         distance = directions[0]['legs'][0]['distance']['value'] / 1000  # Convert to kilometers
         return distance
     return None
 
+def get_driving_distance(start, end):
+    url = "https://routes.googleapis.com/directions/v2:computeRoutes"
+    headers = {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": st.secrets["GOOGLE_MAPS_API_KEY"],
+        "X-Goog-FieldMask": "routes.distanceMeters,routes.duration"
+    }
+    data = {
+        "origin": {"address": start},
+        "destination": {"address": end},
+        "travelMode": "DRIVE"
+    }
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code != 200:
+        raise Exception(f"API Error: {response.text}")
+    result = response.json()
+    distance_km = result['routes'][0]['distanceMeters'] / 1000
+    return distance_km
+
 # Function to get driving route
-def get_driving_route(start, end):
+def get_driving_route_OLD(start, end):
     directions = gmaps.directions(start, end, mode="driving", avoid="ferries")
     if directions:
         steps = directions[0]['legs'][0]['steps']
@@ -128,6 +147,39 @@ def get_driving_route(start, end):
         route.append((steps[-1]['end_location']['lat'], steps[-1]['end_location']['lng']))
         return route
     return None
+
+def get_driving_route(start, end):
+    url = "https://routes.googleapis.com/directions/v2:computeRoutes"
+    headers = {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": st.secrets["GOOGLE_MAPS_API_KEY"],
+        "X-Goog-FieldMask": "routes.legs.steps.startLocation,routes.legs.steps.endLocation"
+    }
+    data = {
+        "origin": {"address": start},
+        "destination": {"address": end},
+        "travelMode": "DRIVE"
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code != 200:
+        raise Exception(f"API Error: {response.text}")
+    result = response.json()
+
+    try:
+        steps = result['routes'][0]['legs'][0]['steps']
+        route = []
+        for step in steps:
+            lat = step['startLocation']['latLng']['latitude']
+            lng = step['startLocation']['latLng']['longitude']
+            route.append((lat, lng))
+        # Ajouter le dernier point d'arrivée
+        end_lat = steps[-1]['endLocation']['latLng']['latitude']
+        end_lng = steps[-1]['endLocation']['latLng']['longitude']
+        route.append((end_lat, end_lng))
+        return route
+    except Exception as e:
+        raise Exception(f"Erreur de parsing de la route : {e}")
 
 # Function to get train route
 def get_train_route(start, end):
