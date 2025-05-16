@@ -11,6 +11,7 @@ from scipy.spatial import KDTree
 import time
 import math
 import streamlit as st
+import requests
 
 # API Key Google Maps
 gmaps = googlemaps.Client(key=st.secrets["GOOGLE_MAPS_API_KEY"])
