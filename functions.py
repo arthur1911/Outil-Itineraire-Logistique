@@ -181,16 +181,6 @@ def get_driving_route(start, end):
     except Exception as e:
         raise Exception(f"Erreur de parsing de la route : {e}")
 
-# Function to get train route
-def get_train_route(start, end):
-    directions = gmaps.directions(start, end, mode="transit", transit_mode="train")
-    if directions:
-        steps = directions[0]['legs'][0]['steps']
-        route = [(step['start_location']['lat'], step['start_location']['lng']) for step in steps]
-        route.append((steps[-1]['end_location']['lat'], steps[-1]['end_location']['lng']))
-        return route
-    return None
-
 # Function to calculate total emissions
 def calculate_total_emissions(path, G):
     total_emissions = 0
