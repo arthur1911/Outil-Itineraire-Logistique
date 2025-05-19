@@ -492,7 +492,7 @@ def add_path_to_map(path, start, end ,G, nodes, maritime_waypoints, sheets_river
                 folium.Marker([lat, lng], popup=place, icon=folium.Icon()).add_to(map_route)
 
     if path_is_road:
-        folium.PolyLine(path, color='orange', weight=2.5, opacity=1, dash_array=None).add_to(map_route)
+        folium.PolyLine(path, color='orange', weight=5, opacity=1, dash_array=None).add_to(map_route)
 
     else:
         for i in range(len(path) - 1):
@@ -500,14 +500,14 @@ def add_path_to_map(path, start, end ,G, nodes, maritime_waypoints, sheets_river
             
             if mode == 'road':
                 route = get_driving_route(path[i], path[i+1])
-                folium.PolyLine(route, color=colors_path[mode]).add_to(map_route)   
+                folium.PolyLine(route, color=colors_path[mode], weight=5, opacity=1, dash_array=None).add_to(map_route)   
             elif mode == 'sea':
                 start_node = G.nodes[path[i]]
                 end_node = G.nodes[path[i + 1]]
                 start_lat, start_lng = start_node['lat'], start_node['lng']
                 end_lat, end_lng = end_node['lat'], end_node['lng']
                 maritime_route = get_maritime_route(maritime_waypoints, start_lat, start_lng, end_lat, end_lng)
-                folium.PolyLine(maritime_route, color=colors_path[mode]).add_to(map_route) 
+                folium.PolyLine(maritime_route, color=colors_path[mode], weight=5, opacity=1, dash_array=None).add_to(map_route) 
             elif mode == 'river':
                 start_node = G.nodes[path[i]]
                 end_node = G.nodes[path[i + 1]]
@@ -516,12 +516,12 @@ def add_path_to_map(path, start, end ,G, nodes, maritime_waypoints, sheets_river
                 end_port = next((place for place, lat, lng in nodes['river_ports'] if lat == end_node['lat'] and lng == end_node['lng']), None)
 
                 maritime_route = get_river_route(sheets_river, sheets_ports, start_port, end_port, start_node, end_node)
-                folium.PolyLine(maritime_route, color=colors_path[mode]).add_to(map_route)
+                folium.PolyLine(maritime_route, color=colors_path[mode], weight=5, opacity=1, dash_array=None).add_to(map_route)
             else:
                 start_node = G.nodes[path[i]]
                 end_node = G.nodes[path[i + 1]]
                 folium.PolyLine(
-                    [(start_node['lat'], start_node['lng']), (end_node['lat'], end_node['lng'])], color=colors_path[mode]).add_to(map_route)
+                    [(start_node['lat'], start_node['lng']), (end_node['lat'], end_node['lng'])], color=colors_path[mode], weight=5, opacity=1, dash_array=None).add_to(map_route)
                 
     return map_route
 
