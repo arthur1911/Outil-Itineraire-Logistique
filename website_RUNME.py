@@ -335,7 +335,7 @@ if st.session_state.trajet_genere:
             # Convertir la carte folium en HTML
             map_html = st.session_state.map_path._repr_html_()
             # Afficher la carte HTML sans rechargement interactif
-            html(map_html, height=700, width=700)
+            html(map_html, height=600, width=700)
 
     with col6:
         # Légende centrée verticalement et avec une police réduite
