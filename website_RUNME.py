@@ -78,8 +78,8 @@ st.title("Simulateur d'itinéraire logistique")
 
 # Section de sélection des inputs dans la sidebar
 st.sidebar.header("Paramètres")
-depart = st.sidebar.text_input("Adresse de départ", value="3 rue de Stockholm, Paris")
-destination = st.sidebar.text_input("Adresse de destination", value="SCALANDES, Mont de Marsan")
+depart = st.sidebar.text_input("Adresse de départ", value="ETYO, 3 rue de Stockholm, Paris")
+destination = st.sidebar.text_input("Adresse de destination", value="Milan, Italie")
 quantite = st.sidebar.number_input("Quantité en tonnes", min_value=1, value=1)
 
 # Fonction de traduction des types de cargaison
