@@ -31,9 +31,6 @@ with open(temp_credentials_path, "w") as f:
 # Charger les informations d'identification
 creds = Credentials.from_service_account_file(temp_credentials_path, scopes=["https://www.googleapis.com/auth/spreadsheets"])
 
-# Supprimer le fichier temporaire après usage
-os.remove(temp_credentials_path)
-
 # Connectez-vous à l'API Google Sheets
 service = build("sheets", "v4", credentials=creds)
 
