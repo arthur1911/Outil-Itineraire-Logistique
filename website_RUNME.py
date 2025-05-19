@@ -328,9 +328,9 @@ if st.session_state.trajet_genere:
     col5, col6 = st.columns([5, 1])
 
     with col5:
-        # Titre de la carte centré horizontalement
         st.markdown("<h3 style='text-align: center;'>Carte de l'itinéraire</h3>", unsafe_allow_html=True)
-        st_folium(st.session_state.map_path, width=700, height=500)
+        if st.session_state.map_path:
+            st_folium(st.session_state.map_path, width=700, height=500, key="carte_itineraire")
 
     with col6:
         # Légende centrée verticalement et avec une police réduite
