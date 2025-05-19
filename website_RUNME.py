@@ -349,7 +349,7 @@ if st.session_state.trajet_genere:
             full_html = css_fix + folium_html
     
             # Afficher avec composant Streamlit
-            html(full_html, height=600, width=700, scrolling=False)
+            html(full_html, height=500, width=700, scrolling=False)
 
 
     with col6:
