@@ -332,10 +332,25 @@ if st.session_state.trajet_genere:
     with col5:
         st.markdown("<h3 style='text-align: center;'>Carte de l'itinéraire</h3>", unsafe_allow_html=True)
         if st.session_state.map_path:
-            # Convertir la carte folium en HTML
-            map_html = st.session_state.map_path._repr_html_()
-            # Afficher la carte HTML sans rechargement interactif
-            html(map_html, height=600, width=700)
+            # Rendu HTML de Folium
+            folium_html = st.session_state.map_path._repr_html_()
+    
+            # Injecter une règle CSS pour forcer la carte à prendre toute la hauteur
+            css_fix = """
+            <style>
+            .folium-map {
+                height: 100% !important;
+                min-height: 100% !important;
+            }
+            </style>
+            """
+    
+            # Ajouter la règle CSS en haut de la carte
+            full_html = css_fix + folium_html
+    
+            # Afficher avec composant Streamlit
+            html(full_html, height=600, width=700, scrolling=False)
+
 
     with col6:
         # Légende centrée verticalement et avec une police réduite
