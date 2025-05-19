@@ -478,7 +478,14 @@ def get_river_route(sheets_river, sheets_ports, start_port, end_port, start_node
 def add_path_to_map(path, start, end ,G, nodes, maritime_waypoints, sheets_river, sheets_ports, input_coordinates, path_is_road):
     # Créer une carte centrée sur l'Europe
     from folium.plugins import Fullscreen
-    map_route = folium.Map(location=[54.5260, 15.2551], zoom_start=4, width='100%', height='100%')
+    map_route = folium.Map(
+        location=[54.5260, 15.2551],
+        zoom_start=4,
+        width='100%',
+        height='100%',
+        tiles='CartoDB positron'
+    )
+
     Fullscreen(position='topright', title='Plein écran', title_cancel='Quitter plein écran', force_separate_button=True).add_to(map_route)
 
     colors_path = {"road": "orange", "rail": "green", "sea": "blue", "air": "red", "river": "cyan"}
