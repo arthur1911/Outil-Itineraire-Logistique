@@ -327,10 +327,15 @@ if st.session_state.trajet_genere:
     # Disposer la carte et la légende côte à côte
     col5, col6 = st.columns([5, 1])
 
+    from streamlit.components.v1 import html
+
     with col5:
         st.markdown("<h3 style='text-align: center;'>Carte de l'itinéraire</h3>", unsafe_allow_html=True)
         if st.session_state.map_path:
-            st_folium(st.session_state.map_path, width=700, height=500, key="carte_itineraire")
+            # Convertir la carte folium en HTML
+            map_html = st.session_state.map_path._repr_html_()
+            # Afficher la carte HTML sans rechargement interactif
+            html(map_html, height=500, width=700)
 
     with col6:
         # Légende centrée verticalement et avec une police réduite
